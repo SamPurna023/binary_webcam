@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Webcam Art</title>
+  <link rel="stylesheet" href="binary_webcam.css">
+</head>
+
+<body>
+
+  <video id="vid" autoplay playsinline></video>
+  <canvas id="cnv"></canvas>
+
+  <header>
+    <h1> ASCII WEBCAM </h1>
+    <button id="startBtn">▶ START CAMERA</button>
+    <button id="snapBtn">⬡ SNAPSHOT</button>
+    <span id="status">● OFFLINE</span>
+  </header>
+
+  <main>
+    <div id="canvas-area">
+      <div id="placeholder">[ PRESS START CAMERA ]</div>
+      <pre id="output"></pre>
+    </div>
+
+    <aside>
+      <div>
+        <div class="section-title">DISPLAY MODE</div>
+        <div class="mode-group">
+          <button class="mode-btn active" data-mode="binary">01 Binary (0s and 1s)</button>
+          <button class="mode-btn" data-mode="shade">:: ASCII Shading</button>
+          <button class="mode-btn" data-mode="block">█ Block Fill</button>
+          <button class="mode-btn" data-mode="mixed">?? Mixed Binary</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">COLOR</div>
+        <div class="color-group">
+          <div class="color-dot active" data-color="#00ff41" style="background:#00ff41" title="Matrix Green"></div>
+          <div class="color-dot" data-color="#00bfff" style="background:#00bfff" title="Cyber Blue"></div>
+          <div class="color-dot" data-color="#ff3c00" style="background:#ff3c00" title="Red Alert"></div>
+          <div class="color-dot" data-color="#ffffff" style="background:#ffffff" title="White"></div>
+          <div class="color-dot" data-color="#ffd700" style="background:#ffd700" title="Gold"></div>
+          <div class="color-dot" data-color="#bf5fff" style="background:#bf5fff" title="Purple"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">FONT SIZE</div>
+        <div class="ctrl">
+          <div class="ctrl-row"><span>Size</span><span class="ctrl-val" id="fsVal">10px</span></div>
+          <input type="range" id="fontSize" min="6" max="18" value="10" step="1">
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">IMAGE PROCESSING</div>
+        <div class="ctrl">
+          <div class="ctrl-row"><span>Contrast</span><span class="ctrl-val" id="ctVal">0.8</span></div>
+          <input type="range" id="contrast" min="0.1" max="3" value="0.8" step="0.1">
+        </div>
+        <div class="ctrl" style="margin-top:10px">
+          <div class="ctrl-row"><span>Threshold</span><span class="ctrl-val" id="thVal">128</span></div>
+          <input type="range" id="threshold" min="0" max="255" value="128" step="1">
+        </div>
+        <div class="ctrl" style="margin-top:10px">
+          <div class="ctrl-row"><span>Brightness</span><span class="ctrl-val" id="brVal">1.0</span></div>
+          <input type="range" id="brightness" min="0.2" max="2" value="1.0" step="0.1">
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <label id="mirror-toggle"><input type="checkbox" id="mirror" checked> Mirror (flip horizontal)</label>
+        <label id="invert-toggle"><input type="checkbox" id="invert"> Invert (dark on light)</label>
+      </div>
+    </aside>
+  </main>
+
+  <script src="binary_webcam.js"></script>
+</body>
+
+</html>
