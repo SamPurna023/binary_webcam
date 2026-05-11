@@ -6,7 +6,7 @@ It supports binary output, ASCII shading, block rendering, and mixed binary nois
 
 ## Preview
 
-![Binary Webcam Art Preview](Screenshot 2026-04-16 205048.png)
+![Preview](Screenshot 2026-04-16 205048.png)
 
 ## Features
 
