@@ -21,6 +21,8 @@ function getBrightness(r, g, b) {
 }
 
 function render() {
+  if (!running) return;
+
   const fs = parseInt(document.getElementById('fontSize').value);
   const contrast = parseFloat(document.getElementById('contrast').value);
   const threshold = parseInt(document.getElementById('threshold').value);
@@ -48,14 +50,20 @@ function render() {
   cnv.width = cols;
   cnv.height = rows;
 
-  ctx.save();
-  ctx.filter = `contrast(${contrast}) brightness(${brightness})`;
-  if (mirror) {
-    ctx.translate(cols, 0);
-    ctx.scale(-1, 1);
+  try {
+    ctx.save();
+    ctx.filter = `contrast(${contrast}) brightness(${brightness})`;
+    if (mirror) {
+      ctx.translate(cols, 0);
+      ctx.scale(-1, 1);
+    }
+    ctx.drawImage(vid, 0, 0, cols, rows);
+    ctx.restore();
+  } catch (e) {
+    console.error('Canvas drawing error:', e);
+    animId = requestAnimationFrame(render);
+    return;
   }
-  ctx.drawImage(vid, 0, 0, cols, rows);
-  ctx.restore();
 
   const data = ctx.getImageData(0, 0, cols, rows).data;
 
@@ -102,19 +110,41 @@ startBtn.addEventListener('click', async () => {
   }
   try {
     status.textContent = '○ CONNECTING...';
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
-    });
+    const constraints = {
+      video: { 
+        facingMode: 'user',
+        width: { ideal: 640 },
+        height: { ideal: 480 }
+      },
+      audio: false
+    };
+    
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
     vid.srcObject = stream;
-    await vid.play();
-    running = true;
-    placeholder.style.display = 'none';
-    startBtn.textContent = '⏹ STOP';
-    status.textContent = '● LIVE';
-    snapBtn.style.display = 'inline-block';
-    render();
+    
+    // Wait for video to load metadata before playing
+    vid.onloadedmetadata = () => {
+      vid.play().then(() => {
+        running = true;
+        placeholder.style.display = 'none';
+        startBtn.textContent = '⏹ STOP';
+        status.textContent = '● LIVE';
+        snapBtn.style.display = 'inline-block';
+        render();
+      }).catch(err => {
+        status.textContent = '✕ ERROR: Could not play video';
+        console.error('Video play error:', err);
+      });
+    };
   } catch (e) {
-    status.textContent = '✕ ERROR: ' + e.message;
+    let errorMsg = e.name;
+    if (e.name === 'NotAllowedError') errorMsg = 'Camera permission denied';
+    else if (e.name === 'NotFoundError') errorMsg = 'No camera found';
+    else if (e.name === 'NotReadableError') errorMsg = 'Camera in use';
+    else if (e.name === 'OverconstrainedError') errorMsg = 'Camera constraints not met';
+    
+    status.textContent = '✕ ERROR: ' + errorMsg;
+    console.error('Camera access error:', e);
   }
 });
 
