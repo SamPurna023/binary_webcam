@@ -33,35 +33,51 @@ It supports binary output, ASCII shading, block rendering, and mixed binary nois
 - binary_webcam.css: Styles and responsive layout
 - binary_webcam.js: Webcam capture, rendering pipeline, controls, and snapshot logic
 
+## Live Demo
+
+https://binary-webcam.vercel.app
+
 ## How To Run
 
 This project is static HTML/CSS/JS. No build step is required.
 
 ### Option 1: Open directly
 
-1. Open binary_webcam.html in your browser.
+1. Open index.html or binary_webcam.html in your browser.
 2. Click START CAMERA.
 3. Allow camera permission when prompted.
 
-### Option 2: Run on local server (recommended)
+### Option 2: Run on localhost (recommended)
 
 Some browsers handle camera permissions more reliably on localhost.
 
-Python:
+Python localhost process:
+
+1. Open terminal in project folder.
+2. Run:
 
 ```powershell
 python -m http.server 8000
 ```
 
-Then open:
+3. Open:
 
-http://localhost:8000/binary_webcam.html
+http://localhost:8000/
 
-Node (no project setup needed):
+Node localhost process:
+
+1. Open terminal in project folder.
+2. Run:
 
 ```powershell
 npx serve .
 ```
+
+3. Open:
+
+http://localhost:3000/
+
+If port 3000 is busy, serve will show a different localhost port in terminal.
 
 ## Usage
 
