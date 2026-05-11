@@ -6,7 +6,7 @@ It supports binary output, ASCII shading, block rendering, and mixed binary nois
 
 ## Preview
 
-![Preview]img width="1905" height="896" alt="Screenshot 2026-04-16 205048" src="https://github.com/user-attachments/assets/6f529054-b80f-4f95-ba78-1b602126173a" />
+![Preview](Screenshot 2026-04-16 205048.png)
 
 ## Features
 
